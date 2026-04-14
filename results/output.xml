@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.3 on win32)" generated="2026-04-08T12:45:37.710199" rpa="false" schemaversion="5">
+<suite id="s1" name="WorkShop3" source="D:\WorkShopAutoMattesting\WorkShop3">
+<suite id="s1-s1" name="Testcase" source="D:\WorkShopAutoMattesting\WorkShop3\Testcase">
+<suite id="s1-s1-s1" name="01 Login Scenarios" source="D:\WorkShopAutoMattesting\WorkShop3\Testcase\01_Login_Scenarios.robot">
+<kw name="Run Keywords" owner="BuiltIn" type="SETUP">
+<kw name="Set Selenium Timeout" owner="SeleniumLibrary">
+<arg>15s</arg>
+<doc>Sets the timeout that is used by various keywords.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.494463" elapsed="0.000760"/>
+</kw>
+<kw name="Open Browser To Login Page" owner="Common">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-04-08T12:45:38.497212" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x000001E72EA80590&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys, selenium.webdriver</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.496458" elapsed="0.001057"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-04-08T12:45:38.498874" level="INFO">${prefs} = {'credentials_enable_service': False, 'profile.password_manager_enabled': False, 'profile.password_manager_leak_detection': False, 'safebrowsing.enabled': False}</msg>
+<var>${prefs}</var>
+<arg>credentials_enable_service=${False}</arg>
+<arg>profile.password_manager_enabled=${False}</arg>
+<arg>profile.password_manager_leak_detection=${False}</arg>
+<arg>safebrowsing.enabled=${False}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.497832" elapsed="0.001414"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_experimental_option</arg>
+<arg>prefs</arg>
+<arg>${prefs}</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.499602" elapsed="0.000604"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-08T12:45:38.500987" level="INFO">${arg_disable_features} = --disable-features=PasswordLeakDetection,SafeBrowsingPasswordCheck</msg>
+<var>${arg_disable_features}</var>
+<arg>--disable-features=PasswordLeakDetection,SafeBrowsingPasswordCheck</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.500468" elapsed="0.000770"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-notifications</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.501482" elapsed="0.000516"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>${arg_disable_features}</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.502269" elapsed="0.000542"/>
+</kw>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:38.503830" level="INFO">Opening browser 'chrome' to base url 'https://opensource-demo.orangehrmlive.com'.</msg>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<arg>options=${options}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.503083" elapsed="5.026183"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2026-04-08T12:45:43.529719" elapsed="0.075333"/>
+</kw>
+<status status="PASS" start="2026-04-08T12:45:38.495792" elapsed="5.109782"/>
+</kw>
+<arg>Set Selenium Timeout</arg>
+<arg>15s</arg>
+<arg>AND</arg>
+<arg>Open Browser To Login Page</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<status status="PASS" start="2026-04-08T12:45:38.493281" elapsed="5.112544"/>
+</kw>
+<test id="s1-s1-s1-t1" name="TC-1 Login To Page Successful" line="17">
+<kw name="Login To OrangeHRM" owner="Login_Page">
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:43.617526" level="INFO">Opening url 'https://opensource-demo.orangehrmlive.com'</msg>
+<arg>${URL}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2026-04-08T12:45:43.616518" elapsed="0.848923"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${USERNAME_INPUT}</arg>
+<arg>15s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-04-08T12:45:44.465728" elapsed="0.723182"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:45.189694" level="INFO">Typing text 'Admin' into text field 'name:username'.</msg>
+<arg>${USERNAME_INPUT}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-04-08T12:45:45.189195" elapsed="0.092052"/>
+</kw>
+<kw name="Input Password" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:45.282681" level="INFO">Typing password into text field 'name:password'.</msg>
+<msg time="2026-04-08T12:45:45.312514" level="INFO">Temporally setting log level to: NONE</msg>
+<arg>${USERPASSWORD_INPUT}</arg>
+<arg>${password}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-04-08T12:45:45.281967" elapsed="0.099531"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:45.382471" level="INFO">Clicking element 'xpath=//button[@type='submit']'.</msg>
+<arg>${LOGIN_BTN}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-04-08T12:45:45.381915" elapsed="0.073804"/>
+</kw>
+<arg>${VALID_USER}[USERNAME]</arg>
+<arg>${VALID_USER}[PASSWORD]</arg>
+<status status="PASS" start="2026-04-08T12:45:43.614667" elapsed="1.841336"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${HEADER}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-04-08T12:45:45.456519" elapsed="1.553798"/>
+</kw>
+<kw name="Element Should Contain" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:47.031554" level="INFO">Element 'xpath=//h6[contains(@class,'oxd-topbar-header-breadcrumb-module')]' contains text 'Dashboard'.</msg>
+<arg>${HEADER}</arg>
+<arg>Dashboard</arg>
+<doc>Verifies that element ``locator`` contains text ``expected``.</doc>
+<status status="PASS" start="2026-04-08T12:45:47.010800" elapsed="0.022186"/>
+</kw>
+<kw name="Run Keyword If Test Passed" owner="BuiltIn" type="TEARDOWN">
+<kw name="Logout To Login Page" owner="Login_Page">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${USER_BTN}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-04-08T12:45:47.037064" elapsed="0.021401"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:47.059799" level="INFO">Clicking element 'class:oxd-userdropdown-tab'.</msg>
+<arg>${USER_BTN}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-04-08T12:45:47.058853" elapsed="0.085555"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGOUT_BTN}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-04-08T12:45:47.144726" elapsed="0.239793"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-04-08T12:45:47.385324" level="INFO">Clicking element 'xpath=//a[normalize-space()='Logout']'.</msg>
+<arg>${LOGOUT_BTN}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-04-08T12:45:47.384796" elapsed="1.010903"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${USERNAME_INPUT}</arg>
+<arg>10s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-04-08T12:45:48.396365" elapsed="0.434041"/>
+</kw>
+<status status="PASS" start="2026-04-08T12:45:47.036020" elapsed="1.794603"/>
+</kw>
+<arg>Logout To Login Page</arg>
+<doc>Runs the given keyword with the given arguments, if the test passed.</doc>
+<status status="PASS" start="2026-04-08T12:45:47.035023" elapsed="1.795788"/>
+</kw>
+<doc>กรณีผู้ใช้งานต้องสามารถเข้าสู่ระบบได้ด้วย Username/Password ที่ถูกต้อง (Admin / admin123)</doc>
+<tag>Login</tag>
+<tag>Positive</tag>
+<tag>Regression</tag>
+<tag>Smoke</tag>
+<tag>ValidCredentials</tag>
+<status status="PASS" start="2026-04-08T12:45:43.606072" elapsed="5.225055"/>
+</test>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2026-04-08T12:45:48.837309" elapsed="2.379996"/>
+</kw>
+<doc>การทดสอบระบบจัดการทรัพยากรบุคคล (HR Management System) โดยใช้เว็บไซต์ OrangeHRM Demo [Authentication &amp; Security (Login/Logout)]</doc>
+<status status="PASS" start="2026-04-08T12:45:37.835036" elapsed="13.382476"/>
+</suite>
+<status status="PASS" start="2026-04-08T12:45:37.824264" elapsed="13.400611"/>
+</suite>
+<status status="PASS" start="2026-04-08T12:45:37.725838" elapsed="13.503326"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">Login</stat>
+<stat pass="1" fail="0" skip="0">Positive</stat>
+<stat pass="1" fail="0" skip="0">Regression</stat>
+<stat pass="1" fail="0" skip="0">Smoke</stat>
+<stat pass="1" fail="0" skip="0">ValidCredentials</stat>
+</tag>
+<suite>
+<stat name="WorkShop3" id="s1" pass="1" fail="0" skip="0">WorkShop3</stat>
+<stat name="Testcase" id="s1-s1" pass="1" fail="0" skip="0">WorkShop3.Testcase</stat>
+<stat name="01 Login Scenarios" id="s1-s1-s1" pass="1" fail="0" skip="0">WorkShop3.Testcase.01 Login Scenarios</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

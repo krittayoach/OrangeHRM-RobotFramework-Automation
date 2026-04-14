@@ -1,0 +1,42 @@
+*** Settings ***
+Library     SeleniumLibrary
+Resource    ../Common.resource
+
+*** Variables ***
+${LOGIN_BTN}            xpath=//button[@type='submit']
+${USER_BTN}             css:.oxd-userdropdown-tab
+${LOGOUT_BTN}           xpath=//a[normalize-space()='Logout']
+${HEADER_BREADCRUMB}    xpath=//h6[contains(@class,'oxd-topbar-header-breadcrumb-module')]
+${ERROR_MSG_ALERT}      xpath=//p[contains(@class,'oxd-alert-content-text')] 
+
+#ตัวแปร
+${USERNAME_INPUT}                 name:username 
+${USERPASSWORD_INPUT}            name:password 
+
+*** Keywords ***
+Login To OrangeHRM
+    [Arguments]    ${username}    ${password}
+    Go To    ${URL}
+    Wait Until Element Is Visible    ${USERNAME_INPUT}    15s
+    Input Text       ${USERNAME_INPUT}    ${username}
+    Input Password   ${USERPASSWORD_INPUT}    ${password}
+    
+    Click Element    ${LOGIN_BTN}
+
+Logout To Login Page
+    Wait Until Element Is Visible    ${USER_BTN}    10s
+    Click Element    ${USER_BTN}
+    Wait Until Element Is Visible    ${LOGOUT_BTN}    10s
+    Click Element    ${LOGOUT_BTN}
+    Wait Until Element Is Visible    ${USERNAME_INPUT}    10s
+
+Login With Credentials
+    [Arguments]    ${username}    ${password}    ${expected}
+    Login To OrangeHRM    ${username}    ${password}
+    
+    IF    '${expected}' == 'Dashboard'
+        Wait Until Element Is Visible    ${HEADER_BREADCRUMB}    10s
+        Logout To Login Page
+    ELSE
+        Wait Until Element Contains    ${ERROR_MSG_ALERT}    ${expected}    10s    
+    END
