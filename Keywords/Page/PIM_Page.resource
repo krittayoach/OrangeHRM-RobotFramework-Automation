@@ -20,8 +20,8 @@ ${RECORDS_FIELD}     xpath=//div[contains(@class, 'orangehrm-container')]
 #Function
 ${DROPDOWN_OPTION}    xpath=//div[@role='listbox']//div[@role='option']   
 
-#Fields Path
-${FIELD_PATH}      C:/Users/asus/Pictures/wallpaper/cyrene-honkai-star-rail-art-hd-wallpaper-uhdpaper.com-569@5@j.jpg
+#Fields Path (relative to repo, portable across machines)
+${FIELD_PATH}      ${CURDIR}/../../TestData/profile.png
 
 *** Keywords ***
 Go To PIM Page

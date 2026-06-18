@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Robot Framework output
+results/
+output.xml
+log.html
+report.html
+selenium-screenshot-*.png
+geckodriver-*.log
+*.robotlog
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/

@@ -1,7 +1,6 @@
 *** Settings ***
 Documentation    User Management (Admin Module)
 Library    SeleniumLibrary
-#Resource    keywords.resource
 Resource    ../Keywords/Common.resource
 Resource    ../Keywords/Page/Login_Page.resource
 Resource    ../Keywords/Page/Admin_Page.resource
