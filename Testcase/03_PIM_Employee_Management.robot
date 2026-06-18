@@ -1,6 +1,7 @@
 *** Settings ***
-Documentation    User Management (Admin Module)
+Documentation    Employee Management (PIM Module)
 Library    SeleniumLibrary
+Library    String
 Resource    ../Keywords/Common.resource
 Resource    ../Keywords/Page/Login_Page.resource
 Resource    ../Keywords/Page/PIM_Page.resource
@@ -8,7 +9,16 @@ Variables    ../config.py
 Suite Setup    Run Keywords
 ...    Set Selenium Timeout    15s
 ...    AND    Open Browser To Login Page
+...    AND    Generate Unique Employee Data
 Suite Teardown    Close Browser
+
+
+*** Keywords ***
+Generate Unique Employee Data
+    # สร้างชื่อ + Employee Id แบบสุ่มต่อรอบรัน เพื่อให้ test รันซ้ำได้โดยไม่ชนข้อมูลเดิม
+    ${rand}=    Generate Random String    4    [NUMBERS]
+    Set Suite Variable    ${EMP_FIRST_NAME}    Krittayoach${rand}
+    Set Suite Variable    ${EMP_ID}    ${rand}
 
 
 *** Test Cases ***
@@ -22,7 +32,7 @@ TC-7 Input New Employee
     
     Go To PIM Page
 
-    Input New Employee    Krittayoach3    N    Thongnoo    1245
+    Input New Employee    ${EMP_FIRST_NAME}    N    Thongnoo    ${EMP_ID}
 
     [Teardown]    Run Keyword If Test Passed    Logout To Login Page
 
@@ -36,7 +46,8 @@ TC-8 Search Employee
 
     Go To PIM Page
 
-    Search Employee    Krittayoach3
+    # ค้นหาพนักงานเดียวกับที่ TC-7 เพิ่งสร้าง (ใช้ค่า ${EMP_FIRST_NAME} ร่วมกันทั้ง suite)
+    Search Employee    ${EMP_FIRST_NAME}
     
     [Teardown]    Run Keyword If Test Passed    Logout To Login Page
 

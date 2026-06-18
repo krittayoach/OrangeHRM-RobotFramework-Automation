@@ -10,7 +10,9 @@ ${SAVE_BTN}                 xpath=//button[normalize-space()='Save']
 
 # Form Fields Locators
 ${USERROLE_SLT}             xpath=//label[normalize-space()='User Role']/following::div[contains(@class,'oxd-select-text')][1]
-${SEARCH_USERNAME_INPUT}     xpath=(//input[@class='oxd-input oxd-input--active'])[2]
+${SEARCH_USERNAME_INPUT}    xpath=//label[normalize-space()='Username']/ancestor::div[contains(@class,'oxd-input-group')]//input
+${RESULTS_TABLE}            xpath=//div[contains(@class,'oxd-table-body')]
+${SUCCESS_TOAST}           xpath=//div[contains(@class,'oxd-toast') and contains(.,'Success')]
 ${ADD_USERNAME_INPUT}        xpath=//label[normalize-space()='Username']/ancestor::div[contains(@class,'oxd-input-group')]//input
 ${STATUS_SLT}               xpath=//label[normalize-space()='Status']/ancestor::div[contains(@class,'oxd-input-group')]//div[contains(@class,'oxd-select-text')]
 ${EMPLOYEE_NAME_INPUT}      xpath=//label[normalize-space()='Employee Name']/ancestor::div[contains(@class,'oxd-input-group')]//input
@@ -55,9 +57,16 @@ Add User
     Input Password                   ${CONFIRM_PASSWORD_FIELD}    ${confirm_password}
 
     Click Element                    ${SAVE_BTN}
-    Wait Until Element Contains      ${HEADER}    Admin    15s
+    # หมายเหตุ: keyword นี้ "เป็นกลาง" ต่อผลลัพธ์ (fill + save เท่านั้น)
+    # เพื่อให้ใช้ซ้ำได้ทั้ง positive (TC-4) และ negative (TC-5)
+    # การ assert ผลสำเร็จ/ล้มเหลว ทำในแต่ละ test case
 
-Search Information 
+Verify User Added Successfully
+    # ใช้โดย test เชิงบวก: หลังบันทึกต้อง redirect กลับหน้า list (ตารางผู้ใช้ปรากฏ)
+    Wait Until Element Contains      ${HEADER}    Admin    15s
+    Wait Until Element Is Visible    ${RESULTS_TABLE}    15s
+
+Search Information
     [Arguments]    ${username}    ${role}    ${employee}    ${status}
     
     # กรอกข้อมูลสำหรับการค้นหา
@@ -82,4 +91,7 @@ Search Information
     
     # เพิ่มการคลิกปุ่มค้นหา (ที่ขาดไปตอนแรก)
     Click Element    ${SEARCH_BTN}
-    Wait Until Page Contains    Records Found    10s
+    # Assert ที่แข็งแรง: ต้องเจอ username ที่ค้นจริงในตารางผลลัพธ์
+    # (ไม่พึ่ง "Records Found" เพราะข้อความนี้ขึ้นแม้ผลเป็น 0 record)
+    Wait Until Element Is Visible    ${RESULTS_TABLE}    10s
+    Wait Until Element Contains      ${RESULTS_TABLE}    ${username}    10s
