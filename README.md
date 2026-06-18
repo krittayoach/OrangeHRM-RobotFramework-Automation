@@ -43,39 +43,42 @@
 ## การติดตั้ง (Installation)
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
+
+> 💡 คำสั่งด้านล่างใช้ `python -m ...` เพื่อให้ทำงานเหมือนกันทั้ง **Windows** และ **macOS/Linux**
+> บนบางเครื่อง (โดยเฉพาะ macOS/Linux) อาจต้องใช้ `python3` แทน `python`
 
 ## การรันเทส (Run Tests)
 
 รันทั้งหมด:
 
 ```bash
-robot Testcase/
+python -m robot Testcase/
 ```
 
 รันเฉพาะ suite:
 
 ```bash
-robot Testcase/01_Login_Scenarios.robot
+python -m robot Testcase/01_Login_Scenarios.robot
 ```
 
 รันเฉพาะ tag (เช่น Smoke):
 
 ```bash
-robot --include Smoke Testcase/
+python -m robot --include Smoke Testcase/
 ```
 
 กำหนดโฟลเดอร์ผลลัพธ์:
 
 ```bash
-robot --outputdir results Testcase/
+python -m robot --outputdir results Testcase/
 ```
 
 ตรวจ syntax โดยไม่เปิด browser จริง:
 
 ```bash
-robot --dryrun Testcase/
+python -m robot --dryrun Testcase/
 ```
 
 หลังรันเสร็จดูผลได้ที่ `log.html` และ `report.html`

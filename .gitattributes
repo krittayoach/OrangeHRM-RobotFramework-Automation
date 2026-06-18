@@ -1,0 +1,17 @@
+# Normalize line endings to LF on commit, check out native on each OS.
+# กัน diff รก/ปัญหา CRLF เวลาสลับเครื่อง Windows <-> macOS/Linux
+* text=auto eol=lf
+
+# Source files: บังคับ LF เสมอ
+*.robot     text eol=lf
+*.resource  text eol=lf
+*.py        text eol=lf
+*.md        text eol=lf
+*.txt       text eol=lf
+
+# Binary: ห้าม git ยุ่งกับ line ending
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
