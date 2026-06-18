@@ -15,14 +15,14 @@ Suite Teardown    Close Browser
 
 *** Variables ***
 ${ERROR_MESSAGE}    xpath=//span[contains(@class, 'oxd-input-field-error-message')]
-# ข้อมูลทดสอบที่ใช้ร่วมกันทั้ง suite (employee ต้องเป็นชื่อที่มีอยู่จริงในระบบ demo)
+# ชื่อ employee ต้องมีจริงในระบบ demo ไม่งั้น dropdown หาไม่เจอ
 ${EMPLOYEE_DATA}    Paul Collings
 ${PASSWORD_DATA}    Komahss123
 
 
 *** Keywords ***
 Generate Unique Test Data
-    # สร้าง username แบบสุ่มต่อรอบรัน เพื่อให้ test รันซ้ำได้โดยไม่ชน "Username already exists"
+    # สุ่ม username ใหม่ทุกรอบ กันมัน error ว่ามีชื่อนี้แล้วตอนรันซ้ำ
     ${rand}=    Generate Random String    5    [LETTERS]
     Set Suite Variable    ${TEST_USERNAME}    Auto${rand}
 
@@ -58,5 +58,5 @@ TC-6 Search User
 
     Login To OrangeHRM    ${VALID_USER}[USERNAME]    ${VALID_USER}[PASSWORD]
     Go To Admin Page
-    # ค้นหา user เดียวกับที่ TC-4 เพิ่งสร้าง (ใช้ค่า ${TEST_USERNAME} ร่วมกันทั้ง suite)
+    # search หาคนที่เพิ่ง add ไปใน TC-4
     Search Information    ${TEST_USERNAME}    ESS    ${EMPLOYEE_DATA}    Enabled

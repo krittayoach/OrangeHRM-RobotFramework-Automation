@@ -20,7 +20,7 @@ ${RECORDS_FIELD}     xpath=//div[contains(@class, 'orangehrm-container')]
 #Function
 ${DROPDOWN_OPTION}    xpath=//div[@role='listbox']//div[@role='option']   
 
-#Fields Path (relative to repo, portable across machines)
+#Fields Path (ใช้ path แบบ relative จะได้รันได้ทุกเครื่อง ไม่ fix เป็นเครื่องเรา)
 ${FIELD_PATH}      ${CURDIR}/../../TestData/profile.png
 
 *** Keywords ***

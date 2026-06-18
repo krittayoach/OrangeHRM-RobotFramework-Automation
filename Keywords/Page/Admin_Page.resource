@@ -57,12 +57,12 @@ Add User
     Input Password                   ${CONFIRM_PASSWORD_FIELD}    ${confirm_password}
 
     Click Element                    ${SAVE_BTN}
-    # หมายเหตุ: keyword นี้ "เป็นกลาง" ต่อผลลัพธ์ (fill + save เท่านั้น)
-    # เพื่อให้ใช้ซ้ำได้ทั้ง positive (TC-4) และ negative (TC-5)
-    # การ assert ผลสำเร็จ/ล้มเหลว ทำในแต่ละ test case
+    # keyword นี้แค่กรอกฟอร์มกับกด save เฉยๆ ไม่เช็คผล
+    # จะได้เอาไปใช้ได้ทั้ง case ถูก (TC-4) กับ case ผิด (TC-5)
+    # ส่วนเช็คผลไปทำในแต่ละ test เอา
 
 Verify User Added Successfully
-    # ใช้โดย test เชิงบวก: หลังบันทึกต้อง redirect กลับหน้า list (ตารางผู้ใช้ปรากฏ)
+    # ถ้า save ผ่าน หน้าจะเด้งกลับมา list แล้วมีตารางโผล่
     Wait Until Element Contains      ${HEADER}    Admin    15s
     Wait Until Element Is Visible    ${RESULTS_TABLE}    15s
 
@@ -91,7 +91,7 @@ Search Information
     
     # เพิ่มการคลิกปุ่มค้นหา (ที่ขาดไปตอนแรก)
     Click Element    ${SEARCH_BTN}
-    # Assert ที่แข็งแรง: ต้องเจอ username ที่ค้นจริงในตารางผลลัพธ์
-    # (ไม่พึ่ง "Records Found" เพราะข้อความนี้ขึ้นแม้ผลเป็น 0 record)
+    # เช็คว่าเจอ username ในตารางจริงๆ
+    # อย่าเช็คแค่ "Records Found" เพราะมันขึ้นตลอดถึงจะได้ 0 อัน
     Wait Until Element Is Visible    ${RESULTS_TABLE}    10s
     Wait Until Element Contains      ${RESULTS_TABLE}    ${username}    10s

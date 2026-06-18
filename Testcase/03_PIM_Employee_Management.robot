@@ -15,7 +15,7 @@ Suite Teardown    Close Browser
 
 *** Keywords ***
 Generate Unique Employee Data
-    # สร้างชื่อ + Employee Id แบบสุ่มต่อรอบรัน เพื่อให้ test รันซ้ำได้โดยไม่ชนข้อมูลเดิม
+    # สุ่มชื่อกับ id ใหม่ทุกรอบ กันข้อมูลซ้ำตอนรันหลายรอบ
     ${rand}=    Generate Random String    4    [NUMBERS]
     Set Suite Variable    ${EMP_FIRST_NAME}    Krittayoach${rand}
     Set Suite Variable    ${EMP_ID}    ${rand}
@@ -46,7 +46,7 @@ TC-8 Search Employee
 
     Go To PIM Page
 
-    # ค้นหาพนักงานเดียวกับที่ TC-7 เพิ่งสร้าง (ใช้ค่า ${EMP_FIRST_NAME} ร่วมกันทั้ง suite)
+    # หาคนที่เพิ่ง add ไปใน TC-7
     Search Employee    ${EMP_FIRST_NAME}
     
     [Teardown]    Run Keyword If Test Passed    Logout To Login Page
