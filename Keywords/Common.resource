@@ -23,6 +23,3 @@ Open Browser To Login Page
 
     Open Browser    ${URL}    ${BROWSER}    options=${options}
     Maximize Browser Window
-
-Close Browser After Test
-    Close All Browsers
