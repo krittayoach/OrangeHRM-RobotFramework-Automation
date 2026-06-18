@@ -7,6 +7,7 @@ Resource    ../Keywords/Page/Login_Page.resource
 Suite Setup    Run Keywords
 ...    Set Selenium Timeout    15s
 ...    AND    Open Browser To Login Page
+Test Setup    Ensure At Login Page
 Suite Teardown    Close Browser
 
 *** Variables ***

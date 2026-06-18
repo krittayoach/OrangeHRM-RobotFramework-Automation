@@ -30,6 +30,17 @@ Logout To Login Page
     Click Element    ${LOGOUT_BTN}
     Wait Until Element Is Visible    ${USERNAME_INPUT}    10s
 
+Ensure At Login Page
+    [Documentation]    กันเคสเทสก่อนหน้า fail แล้วค้างสถานะ login → เทสถัดไปจะได้เริ่มที่หน้า login เสมอ
+    Go To    ${URL}
+    # ถ้ายัง login ค้างอยู่ (เจอปุ่ม user dropdown) ให้ logout ก่อน
+    ${logged_in}=    Run Keyword And Return Status
+    ...    Wait Until Element Is Visible    ${USER_BTN}    3s
+    IF    ${logged_in}
+        Logout To Login Page
+    END
+    Wait Until Element Is Visible    ${USERNAME_INPUT}    15s
+
 Login With Credentials
     [Arguments]    ${username}    ${password}    ${expected}
     Login To OrangeHRM    ${username}    ${password}

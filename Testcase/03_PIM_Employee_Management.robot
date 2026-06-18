@@ -10,6 +10,7 @@ Suite Setup    Run Keywords
 ...    Set Selenium Timeout    15s
 ...    AND    Open Browser To Login Page
 ...    AND    Generate Unique Employee Data
+Test Setup    Ensure At Login Page
 Suite Teardown    Close Browser
 
 

@@ -1,5 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
+Library    OperatingSystem
 
 *** Variables ***
 ${PIM_BTN}       xpath=//span[contains(@class,'oxd-main-menu-item--name') and normalize-space()='PIM']
@@ -38,8 +39,9 @@ Input New Employee
     # 2. รอให้ Input File ปรากฏใน DOM (อาจจะไม่ Visible ในสายตาคน แต่ต้องมีใน DOM)
     Wait Until Page Contains Element    ${PICTURE_FIELD}    10s
 
-    # 3. ใส่รูปภาพ
-    Choose File    ${PICTURE_FIELD}    ${FIELD_PATH}
+    # 3. ใส่รูปภาพ (Normalize Path เพื่อตัด ../ ออก ไม่งั้น chromedriver ฟ้อง path is not canonical)
+    ${picture_path}=    Normalize Path    ${FIELD_PATH}
+    Choose File    ${PICTURE_FIELD}    ${picture_path}
 
     # 4. ใส่ข้อมูลอื่นๆ
     Input Text    ${F_NAME_FIELD}    ${f_name}
@@ -50,6 +52,8 @@ Input New Employee
     Clear Element Text    ${EMP_ID_FIELD}
     Input Text    ${EMP_ID_FIELD}    ${emp_id}
 
+    # รอให้ form loader (ตอนอัปโหลดรูป) หายก่อน ไม่งั้นมันบังปุ่ม Save -> click intercepted
+    Wait Until Element Is Not Visible    xpath=//div[contains(@class,'oxd-form-loader')]    15s
     Click Button    ${SAVE_BTN}
     # รอให้การบันทึกสำเร็จ
     Wait Until Page Contains    Successfully Saved    30s

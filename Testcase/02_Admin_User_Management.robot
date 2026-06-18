@@ -10,13 +10,15 @@ Suite Setup    Run Keywords
 ...    Set Selenium Timeout    15s
 ...    AND    Open Browser To Login Page
 ...    AND    Generate Unique Test Data
+Test Setup    Ensure At Login Page
 Suite Teardown    Close Browser
 
 
 *** Variables ***
 ${ERROR_MESSAGE}    xpath=//span[contains(@class, 'oxd-input-field-error-message')]
-# ชื่อ employee ต้องมีจริงในระบบ demo ไม่งั้น dropdown หาไม่เจอ
-${EMPLOYEE_DATA}    Paul Collings
+# ใช้เป็น "คำค้น" ของ autocomplete เพื่อหยิบพนักงานจริงตัวแรกที่เจอ
+# (ไม่ผูกชื่อตายตัว เพราะ demo รีเซ็ตข้อมูลเป็นระยะ ชื่ออาจเปลี่ยน)
+${EMPLOYEE_DATA}    a
 ${PASSWORD_DATA}    Komahss123
 
 
@@ -48,7 +50,8 @@ TC-5 Add New User {Password Matching}
     Go To Admin Page
     Add User    ESS    ${EMPLOYEE_DATA}    Enabled    ${TEST_USERNAME}    ${PASSWORD_DATA}    WrongPass123
 
-    Wait Until Element Contains    ${ERROR_MESSAGE}    Passwords do not match
+    # ใช้ Page Contains กันเคสมี error message หลายตัวบนหน้า (จับผิดตัว)
+    Wait Until Page Contains    Passwords do not match    15s
 
     [Teardown]    Run Keyword If Test Passed   Logout To Login Page
 
@@ -58,5 +61,5 @@ TC-6 Search User
 
     Login To OrangeHRM    ${VALID_USER}[USERNAME]    ${VALID_USER}[PASSWORD]
     Go To Admin Page
-    # search หาคนที่เพิ่ง add ไปใน TC-4
-    Search Information    ${TEST_USERNAME}    ESS    ${EMPLOYEE_DATA}    Enabled
+    # search หาคนที่เพิ่ง add ไปใน TC-4 (ค้นด้วย username พอ)
+    Search Information    ${TEST_USERNAME}

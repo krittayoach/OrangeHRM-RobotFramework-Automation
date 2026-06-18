@@ -26,6 +26,21 @@ Go To Admin Page
     Click Element    ${ADMIN_MENU_BTN}
     Wait Until Element Contains      ${HEADER}    Admin    10s
 
+Select Employee Autocomplete
+    [Arguments]    ${query}
+    # ช่อง Employee Name เป็น autocomplete ต้องเลือกจาก dropdown จริงๆ
+    # ถ้าคลิกเร็วไปจะโดน "Searching..." ทำให้ field ขึ้น Invalid
+    Input Text    ${EMPLOYEE_NAME_INPUT}    ${query}
+    Wait Until Element Is Visible        xpath=//div[@role='listbox']    10s
+    # รอให้ "Searching..." หายก่อน ค่อยอ่านผลจริง
+    Wait Until Element Is Not Visible    xpath=//div[@role='option' and contains(.,'Searching')]    10s
+    Wait Until Element Is Visible        xpath=//div[@role='option']    10s
+    # กันเคสหาไม่เจอ (จะขึ้น "No Records Found" แล้วคลิกไปก็ได้ Invalid)
+    ${selected}=    Get Text    xpath=(//div[@role='option'])[1]
+    Should Not Contain    ${selected}    No Records Found    msg=ไม่พบพนักงานจาก query '${query}'
+    Click Element    xpath=(//div[@role='option'])[1]
+    RETURN    ${selected}
+
 Add User
     [Arguments]    ${role}    ${employee}    ${status}    ${username}    ${password}    ${confirm_password}
     Click Element    ${ADD_BTN}
@@ -37,11 +52,8 @@ Add User
     Click Element    xpath=//div[@role='option']//span[normalize-space()='${role}']
 
     # Employee Name
-    Input Text    ${EMPLOYEE_NAME_INPUT}    ${employee}
-    Wait Until Element Is Visible    xpath=//div[@role='listbox']    10s
-    Wait Until Element Is Visible    xpath=(//div[@role='option'])[1]    10s
-    Click Element    xpath=(//div[@role='option'])[1]
-    
+    Select Employee Autocomplete    ${employee}
+
     # Status
     Click Element    ${STATUS_SLT}
     Wait Until Element Is Visible    xpath=//div[@role='listbox']    10s
@@ -67,30 +79,12 @@ Verify User Added Successfully
     Wait Until Element Is Visible    ${RESULTS_TABLE}    15s
 
 Search Information
-    [Arguments]    ${username}    ${role}    ${employee}    ${status}
-    
-    # กรอกข้อมูลสำหรับการค้นหา
+    [Arguments]    ${username}
+    # ค้นด้วย username อย่างเดียวพอ เพราะมัน unique อยู่แล้ว
+    # (ไม่ต้องใส่ filter role/employee/status ให้รก + เปราะ)
     Wait Until Element Is Visible    ${SEARCH_USERNAME_INPUT}    10s
     Input Text                       ${SEARCH_USERNAME_INPUT}    ${username}
-     
-    # เลือก User Role
-    Click Element    ${USERROLE_SLT}
-    Wait Until Element Is Visible    xpath=//div[@role='listbox']    5s
-    Click Element    xpath=//div[@role='option']//span[normalize-space()='${role}']
-
-    Input Text    ${EMPLOYEE_NAME_INPUT}    ${employee}
-    # รอ option ตัวแรกให้ปรากฏจริง ๆ
-    Wait Until Element Is Visible    xpath=(//div[@role='option'])[1]    10s
-    # คลิกตัวแรกเลย (ไม่อิงชื่อ)
-    Click Element    xpath=(//div[@role='option'])[1]
-
-    # เลือก Status
-    Click Element    ${STATUS_SLT}
-    Wait Until Element Is Visible    xpath=//div[@role='listbox']    5s
-    Click Element    xpath=//div[@role='option']//span[normalize-space()='${status}']
-    
-    # เพิ่มการคลิกปุ่มค้นหา (ที่ขาดไปตอนแรก)
-    Click Element    ${SEARCH_BTN}
+    Click Element                    ${SEARCH_BTN}
     # เช็คว่าเจอ username ในตารางจริงๆ
     # อย่าเช็คแค่ "Records Found" เพราะมันขึ้นตลอดถึงจะได้ 0 อัน
     Wait Until Element Is Visible    ${RESULTS_TABLE}    10s
